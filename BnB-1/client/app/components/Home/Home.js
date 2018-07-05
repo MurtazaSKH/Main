@@ -24,12 +24,13 @@ class Home extends Component {
 
     this.onSignUp = this.onSignUp.bind(this);
     this.onSignIn = this.onSignIn.bind(this);
-    this.logout = this.logout(this);
+    this.logout = this.logout.bind(this);
     // this.componentDidMount - this.componentDidMount(this);
   }
 
   componentDidMount() {
     // this.setState({isLoading: false});
+    console.log('componentMounted');
     const obj = getFromStorage('the_main_app');
     if(obj && obj.token) {
       const {token} = obj;
@@ -38,14 +39,16 @@ class Home extends Component {
       .then(json => {
         if(json.success) {
           this.setState ({
-            token:'',
+            token,
             isLoading: false
           });
+          console.log('token: ',this.state.token);
         }
         else {
           this.setState ({
             isLoading: false
           });
+          console.log('token: ',this.state.token);
         }
       });
     } else {
@@ -128,6 +131,7 @@ class Home extends Component {
       .then(res => res.json())
       .then(json => {
         if(json.success) {
+          console.log('logged out!')
           this.setState ({
             token: '',
             isLoading: false
@@ -157,11 +161,11 @@ class Home extends Component {
       signUpError
     } = this.state;
 
-    // if (isLoading) {
-    //   return (<div>
-    //     <p>Loading...</p>
-    //   </div>);
-    // }
+    if (isLoading) {
+      return (<div>
+        <p>Loading...</p>
+      </div>);
+    }
 
     if (!token) {
       return (<div>
@@ -195,11 +199,12 @@ class Home extends Component {
         </div>
       </div>);
     }
-
     return (<div>
       <p>Account</p>
       <button onClick={this.logout}>Logout</button>
     </div>);
+
+
   }
 
   onTextboxChangeSignInEmail(event) {

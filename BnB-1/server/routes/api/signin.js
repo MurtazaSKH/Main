@@ -125,7 +125,7 @@ module.exports = (app) => {
       // Correct User
       const userSession= new UserSession();
       userSession.userId = user._id;
-      // userSession.Name=Name;
+      // UserSession.Name=Name;
       userSession.save ((err,doc) => {
         if(err) {
           console.log(err);
@@ -152,7 +152,7 @@ module.exports = (app) => {
     const {query} = req;
     const {token} = query;
 
-    userSession.findOneAndUpdate ({
+    UserSession.findOneAndUpdate ({
       _id:token,
       isDeleted: false
     },
@@ -168,11 +168,40 @@ module.exports = (app) => {
           message: 'Error: Server error'
         });
       }
-
+      console.log('Logged out successfully');
       return res.send({
         success: true,
         message: 'Logged out!'
       });
+    });
+  });
+
+  app.get('/api/account/verify',(req,res,next)=> {
+    const {query} = req;
+    const {token} = query;
+
+    UserSession.find ({
+      _id:token,
+      isDeleted:false
+    }, (err,sessions) => {
+      if(err) {
+        console.log(err);
+        return res.send({
+          success:false,
+          message: 'Error: Server Error'
+        });
+      }
+      if(sessions.length !=1) {
+        return res.send ({
+          success: false,
+          message: 'Error: Invalid'
+        });
+      } else {
+        return res.send({
+          success: true,
+          message: 'User is logged in'
+        });
+      }
     });
   });
 
