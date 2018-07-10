@@ -14,12 +14,8 @@ class Main extends Component {
       signInError: '',
       signInEmail: '',
       signInPassword: '',
-      signUpName: '',
-      signUpPhone: '',
       signUpEmail: '',
-      signUpPassword: '',
-      signUpPasswordRepeat: '',
-      showSignUp: false
+      signUpPassword: ''
     };
 
 
@@ -27,15 +23,10 @@ class Main extends Component {
     this.onTextboxChangeSignInPassword = this.onTextboxChangeSignInPassword.bind(this);
     this.onTextboxChangeSignUpEmail = this.onTextboxChangeSignUpEmail.bind(this);
     this.onTextboxChangeSignUpPassword = this.onTextboxChangeSignUpPassword.bind(this);
-    this.onTextboxChangeSignUpName = this.onTextboxChangeSignUpName.bind(this);
-    this.onTextboxChangeSignUpPhone = this.onTextboxChangeSignUpPhone.bind(this);
-    // this.onTextboxChangeSignUpPasswordRepeat = this.onTextboxChangeSignUpPasswordRepeat.bind(this);
 
     this.onSignUp = this.onSignUp.bind(this);
     this.onSignIn = this.onSignIn.bind(this);
     this.logout = this.logout.bind(this);
-    // Toggle statee to show signup or signIn form
-    this.changeForm = this.changeForm.bind(this);
 
   }
   // constructor ends
@@ -70,19 +61,17 @@ class Main extends Component {
   }
 
   onSignUp() {
-    const {signUpEmail, signUpName, signUpPassword,signUpPhone} = this.state;
+    const {signUpEmail, signUpPassword} = this.state;
 
     this.setState({isLoading: true});
-    console.log(signUpName);
+    console.log(signUpPassword);
     fetch('/api/account/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json',
     'Accept': 'application/json'},
       body: JSON.stringify({
         email: signUpEmail,
-        password: signUpPassword,
-        name:signUpName,
-        phone: signUpPhone}),
+        password: signUpPassword}),
     })
     .then(res => res.json())
     .then(json=> {
@@ -171,8 +160,6 @@ class Main extends Component {
       signInEmail,
       signInPassword,
       signUpEmail,
-      signUpName,
-      signUpPhone,
       signUpPassword,
       signUpError
     } = this.state;
@@ -184,85 +171,33 @@ class Main extends Component {
     }
 
     if(!token){
-      // console.log(this.state.showSignUp);
-      if(!this.state.showSignUp) {
-        // Login Form
-        return (
-          <div>
-            <section id="login" className="account-page login-page register-page">
-              <div className="container">
-                <h3 className="register-page-heading text-center">Login Now</h3>
-                <div className="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-                  <form className="register-form">
-                    <h5 className="register-heading text-center">Proceed To Login {
-                      (signInError)
-                        ? (<div> {signInError}</div>)
-                        : (null)
-                    }</h5>
-                    <div className="form-group">
-                      <input type="text" className="form-control"  placeholder="Enter Your Email" value={signInEmail} onChange={this.onTextboxChangeSignInEmail} />
-                    </div>
-                    <div className="form-group">
-                      <input type="password" className="form-control" value={signInPassword}
-                    onChange={this.onTextboxChangeSignInPassword} placeholder="Enter Your Password"/>
-                    </div>
-                    <button onClick={this.onSignIn} className="btn btn-default">Login</button>
-                    <div className="login-text">
-                      <div className="row">
-
-                        <div className="col-xs-6 text-right" style={{float:"right"}}>
-                          <a href="#" title="Register With Us" onClick={this.changeForm}>Register Here!</a>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <a href="#" title="Login With Facebook" className="btn social-login fb-login"><i className="fa fa-facebook fa-lg"></i>Login with facebook</a>
-                      </div>
-                      <div className="col-md-6">
-                        <a href="#" title="Login With Google" className="btn social-login google-login"><i className="fa fa-google-plus fa-lg"></i>login with google</a>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </section>
-          </div>
-        )
-      } else {
-        // Sign Up Form
-        return (<div>
-          <section className="account-page login-page register-page">
+      return (
+        <div>
+          <section id="login" className="account-page login-page register-page">
             <div className="container">
-              <h3 className="register-page-heading text-center">Sign Up</h3>
+              <h3 className="register-page-heading text-center">Login Now</h3>
               <div className="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-                <div className="register-form" onSubmit={this.onSignUp}>
-                  <h5 className="register-heading text-center">Please Fill the Form {
-                    (signUpError)
-                      ? (<div> {signUpError}</div>)
+                <form className="register-form">
+                  <h5 className="register-heading text-center">Proceed To Login {
+                    (signInError)
+                      ? (<div> {signInError}</div>)
                       : (null)
                   }</h5>
                   <div className="form-group">
-                    <input type="text" className="form-control"  placeholder="Enter Your Name" value={signUpName} onChange={this.onTextboxChangeSignUpName} />
+                    <input type="text" className="form-control"  placeholder="Enter Your Email" value={signInEmail} onChange={this.onTextboxChangeSignInEmail} />
                   </div>
                   <div className="form-group">
-                    <input type="text" className="form-control"  placeholder="Enter Your Email" value={signUpEmail} onChange={this.onTextboxChangeSignUpEmail} />
+                    <input type="password" className="form-control" value={signInPassword}
+                  onChange={this.onTextboxChangeSignInPassword} placeholder="Enter Your Password"/>
                   </div>
-                  <div className="form-group">
-                    <input type="text" className="form-control"  placeholder="Enter Your Phone Number" value={signUpPhone} onChange={this.onTextboxChangeSignUpPhone} />
-                  </div>
-                  <div className="form-group">
-                    <input type="password" className="form-control" value={signUpPassword}
-                  onChange={this.onTextboxChangeSignUpPassword} placeholder="Enter Your Password"/>
-                  </div>
-                  <button onClick={this.onSignUp} className="btn btn-default">Register</button>
+                  <button onClick={this.onSignIn} className="btn btn-default">Login</button>
                   <div className="login-text">
                     <div className="row">
                       <div className="col-xs-6">
                         <a href="forget-password.html" title="Forgot Password?">Forgot Password?</a>
                       </div>
                       <div className="col-xs-6 text-right">
-                        <a href="#" title="Register With Us" onClick={this.changeForm}>Have An Account?</a>
+                        <a href="register.html" title="Register With Us">Register With Us</a>
                       </div>
                     </div>
                   </div>
@@ -274,14 +209,14 @@ class Main extends Component {
                       <a href="#" title="Login With Google" className="btn social-login google-login"><i className="fa fa-google-plus fa-lg"></i>login with google</a>
                     </div>
                   </div>
-                </div>
+                </form>
               </div>
             </div>
           </section>
-        </div>);
-      }
+        </div>
+      )
     }
-    return (<div><p>rest of the app and components</p> <button onClick={this.logout} className="btn btn-default">Logout</button> </div>);
+    return (<div><p>Sign up Form</p></div>);
   }
 
   onTextboxChangeSignInEmail(event) {
@@ -302,36 +237,6 @@ class Main extends Component {
   onTextboxChangeSignUpPassword(event) {
     this.setState ({signUpPassword: event.target.value});
     // console.log(this.state.signUpPassword);
-  }
-
-  // onTextboxChangeSignUpPasswordRepeat(event) {
-  //   this.setState ({signUpPasswordRepeat: event.target.value});
-  //   // console.log(this.state.signUpPassword);
-  //   if(!(this.state.signUpPassword==this.state.signUpPasswordRepeat)) {
-  //     this.setState({
-  //       signUpError: "Passwords do not match!"
-  //     });
-  //   }
-  // }
-
-  onTextboxChangeSignUpName(event) {
-    this.setState ({signUpName: event.target.value});
-    // console.log(this.state.signUpPassword);
-  }
-
-  onTextboxChangeSignUpPhone(event) {
-    this.setState ({signUpPhone: event.target.value});
-    // console.log(this.state.signUpPassword);
-  }
-
-  changeForm(event) {
-    // To prevent screen from moving to top
-    event.preventDefault();
-    this.setState (prevState => ({
-      showSignUp: !prevState.showSignUp
-    }),() => {
-      console.log(this.state.showSignUp);
-    });
   }
 }
 
