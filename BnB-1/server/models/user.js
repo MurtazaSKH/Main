@@ -25,6 +25,10 @@ const UserSchema = new mongoose.Schema ({
   signUpDate: {
     type: Date,
     default: Date.now()
+  },
+  userType: {
+    type: String,
+    default: 'End'
   }
 });
 
