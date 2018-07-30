@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import 'whatwg-fetch';
 import {setInStorage,getFromStorage} from '../../utils/storage';
+const axios = require ('axios');
 
 class AddProduct extends Component {
   constructor (props) {
@@ -13,16 +14,33 @@ class AddProduct extends Component {
       productDesc: '',
       productPrice: '',
       productQuantity: '',
-      addProductError: ''
+      addProductError: '',
+      pictures: [],
+      selectedFile: null
     };
     this.onAddProduct = this.onAddProduct.bind(this);
     this.onTextProductName= this.onTextProductName.bind(this);
     this.onTextProductDesc= this.onTextProductDesc.bind(this);
     this.onTextProductPrice = this.onTextProductPrice.bind(this);
     this.onTextProductQuantity = this.onTextProductQuantity.bind(this);
+    this.fileChangedHandler=this.fileChangedHandler.bind(this);
+    this.uploadHandler=this.uploadHandler.bind(this);
   }
 
-  onAddProduct () {
+  fileChangedHandler (event) {
+    // const file = event.target.file[0];
+    this.setState({selectedFile: event.target.files[0]});
+  }
+  uploadHandler () {
+    // console.log(this.state.selectedFile);
+    axios.post('/file-upload', this.state.selectedFile,{
+    onUploadProgress: progressEvent => {
+      console.log(progressEvent.loaded / progressEvent.total)
+    }})
+  }
+
+  onAddProduct (event) {
+    event.preventDefault();
     const {isLoading, productName, productDesc, productPrice, productQuantity, addProductError} = this.state;
 
     this.setState ({isLoading: true});
@@ -94,8 +112,12 @@ class AddProduct extends Component {
               <input type="text" className="form-control"  placeholder="Enter Product Price" value={productPrice} onChange={this.onTextProductPrice} />
             </div>
             <div className="form-group">
-              <input type="password" className="form-control" value={productQuantity}
+              <input type="text" className="form-control" value={productQuantity}
             onChange={this.onTextProductQuantity} placeholder="Enter Product Quantity"/>
+            </div>
+            <div className="form-group">
+              <input type="file" onChange={this.fileChangedHandler}/>
+              <button onClick={this.uploadHandler}>Upload</button>
             </div>
             <button onClick={this.onAddProduct} className="btn btn-default">Add Product</button>
             {/* <div className="login-text">

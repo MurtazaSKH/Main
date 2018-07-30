@@ -55,6 +55,7 @@ module.exports = (app) => {
 
       const newProduct = new ProductItem();
       newProduct.name=name;
+      // newProduct.productId= getNextSequenceValue("productId");
       newProduct.description=description;
       newProduct.price=price;
       newProduct.quantity=quantity;
@@ -63,7 +64,7 @@ module.exports = (app) => {
         if(err) {
           return res.send({
             success: false,
-            message: 'Change: Error: Cannot add product'
+            message: 'Change: Error: Cannot add product'+err
           });
         }
         return res.send({

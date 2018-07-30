@@ -4,12 +4,13 @@ class ProductItem extends React.Component {
   constructor (props) {
     super (props);
     this.state = {
-      name: ''
+
     };
+    // console.log(this.props);
   }
 
   render () {
-    return (<div>
+    return (<ul>
       <div className="list-products-block">
                 <div className="row">
                   <div className="col-md-3">
@@ -19,24 +20,24 @@ class ProductItem extends React.Component {
                     <div className="list-products-icon">
                       <ul>
                         <li><a href="cart.html" title="Add To Cart"><i className="fa fa-shopping-bag"></i></a></li>
-                        <li><a href="images/shop/product-14.png" className="product-popup" title="Broccoli"><i className="fa fa-search"></i></a></li>
+                        {/* <li><a href="images/shop/product-14.png" className="product-popup" title="Broccoli"><i className="fa fa-search"></i></a></li> */}
                         <li><a href="wishlist.html" title="Wish List"><i className="fa fa-heart-o"></i></a></li>
-                        <li><a href="#" title="Compare"><i className="fa fa-random"></i></a></li>
+                        {/* <li><a href="#" title="Compare"><i className="fa fa-random"></i></a></li> */}
                       </ul>
                     </div>
                   </div>
                   <div className="col-md-3">
                     <div className="list-products-dtl">
-                      <h5 className="list-products-name"><a href="product-detail.html" title="Broccoli">Broccoli</a></h5>
+                      <h5 className="list-products-name"><a href="product-detail.html" title="Broccoli">{this.props.product.name}</a></h5>
                       <a href="#" className="products-origin" title="mediacity farm">mediacity farm</a>
                     </div>
                   </div>
                   <div className="col-md-4">
-                    <p className="list-products-info">in <a href="#" title="Organic">Organic</a> / <a href="#" title="Food">Food</a> / <a href="#" title="Vegetable">Vegetable</a> / <a href="#" title="Broccli">Broccli</a><br/>Carbohydrates, Fats, Minerals, Water, Nutrition, Manufacture, Food processor, Recipe, Restaurant</p>
+                    <p className="list-products-info"> {this.props.product.description}</p>
                   </div>
                   <div className="col-md-2 text-center">
                     <div className="products-price-box">
-                      <div className="price">$12.00</div>
+                      <div className="price"><span style={{fontSize:'20px'}}>PKR</span> {this.props.product.price}</div>
                       <div className="shop-products-rating">
                         <ul>
                           <li><i className="fa fa-star"></i></li>
@@ -51,7 +52,7 @@ class ProductItem extends React.Component {
                   </div>
                 </div>
               </div>
-    </div>);
+    </ul>);
   }
 }
 
