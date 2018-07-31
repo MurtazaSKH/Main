@@ -61,7 +61,7 @@ class AddProduct extends Component {
       var xhr = new XMLHttpRequest();
       // ../../../../../BnB-1/server/routes/saveImage.js
       var url = 'E:\Main\BnB-1\client\app\components\Products\saveImage.js'
-      xhr.open('post','\saveImage.js',true);
+      xhr.open('post','/saveImage/save',true);
       console.log('Response:'+this.response)
       xhr.onload = function() {
         console.log('Status:'+this.status)
