@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import 'whatwg-fetch';
 import {setInStorage,getFromStorage} from '../../utils/storage';
-const axios = require ('axios');
+// const axios = require ('axios');
 
 class AddProduct extends Component {
   constructor (props) {
@@ -16,7 +16,8 @@ class AddProduct extends Component {
       productQuantity: '',
       addProductError: '',
       pictures: [],
-      selectedFile: null
+      selectedFile: '',
+      imagePreviewURL: ''
     };
     this.onAddProduct = this.onAddProduct.bind(this);
     this.onTextProductName= this.onTextProductName.bind(this);
@@ -30,13 +31,49 @@ class AddProduct extends Component {
   fileChangedHandler (event) {
     // const file = event.target.file[0];
     this.setState({selectedFile: event.target.files[0]});
+    console.log(event.target.files[0]);
+    let reader = new FileReader();
+    let file = event.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState ({
+        selectedFile: file,
+        imagePreviewURL: reader.result
+      });
+    }
+
+    reader.readAsDataURL(file);
+  }
+
+  uploadImage (imageFile) {
+
   }
   uploadHandler () {
     // console.log(this.state.selectedFile);
-    axios.post('/file-upload', this.state.selectedFile,{
-    onUploadProgress: progressEvent => {
-      console.log(progressEvent.loaded / progressEvent.total)
-    }})
+    // axios.post('/file-upload', this.state.selectedFile,{
+    // onUploadProgress: progressEvent => {
+    //   console.log(progressEvent.loaded / progressEvent.total)
+    // }})
+    // uploadImage(this.state.selectedFile);
+    return new Promise((resolve,reject)=> {
+      let imageFormData = new FormData();
+      imageFormData.append('imageFile',this.state.selectedFile);
+      var xhr = new XMLHttpRequest();
+      // ../../../../../BnB-1/server/routes/saveImage.js
+      var url = 'E:\Main\BnB-1\client\app\components\Products\saveImage.js'
+      xhr.open('post','\saveImage.js',true);
+      console.log('Response:'+this.response)
+      xhr.onload = function() {
+        console.log('Status:'+this.status)
+        if(this.status ==200) {
+          resolve(this.response);
+        } else {
+          reject (this.statusText);
+        }
+      };
+
+      xhr.send(imageFormData);
+    });
   }
 
   onAddProduct (event) {
@@ -85,8 +122,12 @@ class AddProduct extends Component {
 
   render () {
     const {
-      isLoading, token, productName, productDesc, productPrice, productQuantity, addProductError
+      isLoading, token, productName, productDesc, productPrice, productQuantity, addProductError, selectedFile, imagePreviewURL
     } = this.state;
+    let $imagePreview = null;
+    if(imagePreviewURL) {
+      $imagePreview = (<div><img style={{maxWidth:'100%', padding:'15px 0'}} src={imagePreviewURL} /><button onClick={this.uploadHandler}>Upload</button></div>);
+    }
 
     if(isLoading) {
       return (<div><p>Loading...</p></div>);
@@ -116,8 +157,10 @@ class AddProduct extends Component {
             onChange={this.onTextProductQuantity} placeholder="Enter Product Quantity"/>
             </div>
             <div className="form-group">
-              <input type="file" onChange={this.fileChangedHandler}/>
-              <button onClick={this.uploadHandler}>Upload</button>
+              <label htmlFor="files" className="btn btn-default" style={{backgroundColor:'#d0ef8b'}}>Select Image</label>
+              <input id="files" type="file" style={{display:'none'}} onChange={this.fileChangedHandler} text="asd"/>
+              {$imagePreview}
+
             </div>
             <button onClick={this.onAddProduct} className="btn btn-default">Add Product</button>
             {/* <div className="login-text">
