@@ -6,6 +6,7 @@ const path = require('path');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
+const passport = require('passport');
 
 const config = require('../config/config');
 const webpackConfig = require('../webpack.config');
@@ -13,6 +14,9 @@ const webpackConfig = require('../webpack.config');
 const isDev = process.env.NODE_ENV !== 'production';
 const port  = process.env.PORT || 8080;
 
+// API Routes
+const users = require('./routes/api/users');
+const products = require('./routes/api/products');
 
 // Configuration
 // ================================================================================================
@@ -25,8 +29,15 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// API routes
-require('./routes')(app);
+// Passport middleware
+app.use(passport.initialize());
+require('../config/passport')(passport);
+
+// Use routes
+app.use('/api/users',users);
+app.use('/api/products',products);
+// require('./routes')(app);
+// app.use('/api/users',users);
 
 if (isDev) {
   const compiler = webpack(webpackConfig);

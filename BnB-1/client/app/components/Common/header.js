@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Header = () => (
   <div>
       <section className="nav-bar">
-        <div className="top-bar hidden-xs">
+        {/* <div className="top-bar hidden-xs">
           <div className="container">
             <div className="row">
               <div className="col-md-5 hidden-sm">
@@ -22,7 +22,7 @@ const Header = () => (
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="container">
           <div className="row">
             <div className="col-md-3">
@@ -143,7 +143,7 @@ const Header = () => (
                   <li><a href="#">User Name</a></li>
                   <li><a href="#">Login</a></li>
                   <li><a href="#">Sign Up</a></li>
-                  <li>
+                  {/* <li>
                     <div className="nav-dropdown">
                       <div className="language-dropdown dropdown">
                         <button className="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -157,7 +157,7 @@ const Header = () => (
                         </ul>
                       </div>
                     </div>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </div>

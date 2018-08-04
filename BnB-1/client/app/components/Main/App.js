@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+import Header from '../Common/header';
+import Footer from '../Common/footer';
 
 const App = ({ children }) => (
   <>
