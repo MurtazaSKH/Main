@@ -7,6 +7,7 @@ const passport = require('passport');
 const users = require('./routes/api/users');
 const userSession = require('./routes/api/userSession');
 const profile = require('./routes/api/profile');
+const uploadimage = require('./routes/api/uploadimage');
 
 const app=express();
 
@@ -35,6 +36,7 @@ require('./config/passport')(passport);
 app.use('/api/users',users);
 // app.use('/api/userSession',userSession);
 app.use('/api/profile',profile);
+app.use('/api/uploadImage',uploadimage);
 
 const port = process.env.PORT || 5000;
 

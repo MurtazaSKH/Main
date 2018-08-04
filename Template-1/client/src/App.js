@@ -14,6 +14,7 @@ import Footer from './components/layout/footer';
 import Landing from './components/layout/landing';
 import Login from './components/auth/login';
 import Register from './components/auth/register';
+import UploadImage from './components/layout/uploadimage';
 
 // const store = createStore( ()=> [],{},applyMiddleware());
 
@@ -30,7 +31,8 @@ if (localStorage.jwtToken) {
   const currentTime = Date.now() / 1000;
   if(decoded.exp < currentTime) {
     // logout users
-    store.dispatch(logoutUser);
+    // console.log(decoded.exp);
+    store.dispatch(logoutUser());
     // Clear current profile
     // redirect to login
     window.location.href = "/login";
@@ -48,6 +50,7 @@ class App extends Component {
             <div className="container">
               <Route exact path="/register" component={Register}/>
               <Route exact path="/login" component={Login}/>
+              <Route exact path="/imageupload" component={UploadImage}/>
             </div>
             <Footer/>
           </div>

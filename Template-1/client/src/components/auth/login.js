@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {loginUser} from '../../actions/authActions';
-import classnames from 'classnames';
+// import classnames from 'classnames';
 
 class Login extends React.Component {
   constructor () {
@@ -31,9 +31,9 @@ class Login extends React.Component {
     this.props.loginUser(userData);
   }
   componentDidMount() {
-    if(this.props.auth.isAuthenticated) {
-      this.props.history.push('/dashboard');
-    }
+    // if(this.props.auth.isAuthenticated) {
+    //   this.props.history.push('/dashboard');
+    // }
   }
   componentWillReceiveProps (nextProps) {
     if(nextProps.auth.isAuthenticated){
@@ -46,7 +46,9 @@ class Login extends React.Component {
 
   render() {
     const {errors} = this.state;
-
+    if(this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
     return(
       <div>
         <h1>Login</h1>

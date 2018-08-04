@@ -17,6 +17,7 @@ class Landing extends React.Component {
         <h1>Landing</h1>
         <Link to="/login">Login</Link> <br/>
         <Link to="/register">Register</Link>
+        <Link to="/uploadimage">Upload Image</Link>
       </div>
     );
   }
