@@ -1,5 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {loginUser} from '../../actions/userActions';
+
 
 class Login extends React.Component {
   constructor() {
@@ -14,13 +18,16 @@ class Login extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
    onChange(e) {
-     console.log(e.target.value);
      this.setState({[e.target.name]:e.target.value});
    }
 
    onSubmit(e) {
      e.preventDefault();
-     console.log('form submitted');
+     const userData = {
+       email: this.state.email,
+       password: this.state.password
+     };
+     this.props.loginUser(userData);
    }
 
    render() {
@@ -67,4 +74,15 @@ class Login extends React.Component {
    }
 }
 
-export default Login;
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  userAuth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  userAuth: state.userAuth,
+  errors: state.errors
+});
+
+export default connect(mapStateToProps,{loginUser})(Login);

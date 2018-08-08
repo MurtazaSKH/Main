@@ -1,5 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {registerUser} from '../../actions/userActions';
 
 class Register extends React.Component {
   constructor() {
@@ -21,6 +24,14 @@ class Register extends React.Component {
   }
   onSubmit(e) {
     e.preventDefault();
+    const userData = {
+      name: this.state.name,
+      email: this.state.email,
+      password: this.state.password,
+      password2: this.state.password2
+    }
+    console.log('register form submitted');
+    this.props.registerUser(userData);
   }
   render() {
     return (
@@ -29,7 +40,7 @@ class Register extends React.Component {
           <div className="container">
             <h3 className="register-page-heading text-center">Sign Up</h3>
             <div className="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-              <div className="register-form" onSubmit={this.onSignUp}>
+              <form className="register-form" onSubmit={this.onSubmit}>
                 {/* <h5 className="register-heading text-center">Please Fill the Form {
                   (signUpError)
                     ? (<div> {signUpError}</div>)
@@ -47,6 +58,10 @@ class Register extends React.Component {
                 <div className="form-group">
                   <input type="password" className="form-control" name="password" value={this.state.password}
                 onChange={this.onChange} placeholder="Enter Your Password"/>
+                </div>
+                <div className="form-group">
+                  <input type="password" className="form-control" name="password2" value={this.state.password2}
+                onChange={this.onChange} placeholder="Repeat Your Password"/>
                 </div>
                 <button type="Submit" className="btn btn-default">Register</button>
                 <div className="login-text">
@@ -68,7 +83,7 @@ class Register extends React.Component {
                     <a href="#" title="Login With Google" className="btn social-login google-login"><i className="fa fa-google-plus fa-lg"></i>login with google</a>
                   </div>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </section>
@@ -77,4 +92,16 @@ class Register extends React.Component {
   }
 }
 
-export default Register;
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  userAuth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+}
+
+const mapStateToProps =(state) => ({
+  userAuth: state.userAuth,
+  errors: state.errors
+})
+
+
+export default connect(mapStateToProps,{registerUser})(Register);

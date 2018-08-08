@@ -62,7 +62,7 @@ router.post('/login', (req,res) => {
       bcrypt.compare(req.body.password,user.password)
         .then(isMatch => {
           if(isMatch) {
-            console.log('matched');
+            // console.log('matched');
             // Setting up JWT and Passport on successful Login
             const payload = {id:user.id,name:user.name};
             jwt.sign(payload,keys.secretOrKey,{expiresIn: 3600}, (err,token) => {
