@@ -1,6 +1,7 @@
 import React from 'react';
-
 import { Link } from 'react-router-dom';
+
+import HeaderCart from '../Cart/headerCart';
 
 const Header = () => (
   <div>
@@ -141,8 +142,8 @@ const Header = () => (
               <div className="nav-info-bar">
                 <ul className="info-list">
                   <li><a href="#">User Name</a></li>
-                  <li><a href="#">Login</a></li>
-                  <li><a href="#">Sign Up</a></li>
+                  <li><Link to='/login'>Login</Link></li>
+                  <li><Link to='/register'>Sign Up</Link></li>
                   {/* <li>
                     <div className="nav-dropdown">
                       <div className="language-dropdown dropdown">
@@ -165,64 +166,8 @@ const Header = () => (
               <div className="navbar-cart-icon">
                 <a href="#" title="Cart" id="cart" className="cart"><i className="fa fa-shopping-basket" aria-hidden="true"></i></a>
               </div>
-              <ul className="cart-box cart-box-pages">
-                <li className="cart-content">
-                  <div className="cart-img">
-                    <a href="product-detail.html" title="Lemon"><img src="images/featured-product-04.png" alt="Product"/></a>
-                  </div>
-                  <div className="cart-dtl">
-                    <h6 className="cart-title"><a href="product-detail.html" title="Lemon">Lemon</a></h6>
-                    <div className="cart-meta">
-                      <div className="cart-price">Price: $40.00</div>
-                      <div className="cart-qty">Qty: 3</div>
-                    </div>
-                    <div className="cart-remove">
-                      <a href="#" title="Remove From Cart"><i className="fa fa-close"></i></a>
-                    </div>
-                  </div>
-                </li>
-                <li className="cart-content">
-                  <div className="cart-img">
-                    <a href="product-detail.html" title="Berry"><img src="images/featured-product-06.png" alt="Product"/></a>
-                  </div>
-                  <div className="cart-dtl">
-                    <h6 className="cart-title"><a href="product-detail.html" title="Berry">Berry</a></h6>
-                    <div className="cart-meta">
-                      <div className="cart-price">Price: $30.00</div>
-                      <div className="cart-qty">Qty: 1</div>
-                    </div>
-                    <div className="cart-remove">
-                      <a href="#" title="Remove From Cart"><i className="fa fa-close"></i></a>
-                    </div>
-                  </div>
-                </li>
-                <li className="cart-content">
-                  <div className="cart-img">
-                    <a href="product-detail.html" title="Pomegranate"><img src="images/featured-product-02.png" alt="Product"/></a>
-                  </div>
-                  <div className="cart-dtl">
-                    <h6 className="cart-title"><a href="product-detail.html" title="Pomegranate">Pomegranate</a></h6>
-                    <div className="cart-meta">
-                      <div className="cart-price">Price: $50.00</div>
-                      <div className="cart-qty">Qty: 2</div>
-                    </div>
-                    <div className="cart-remove">
-                      <a href="#" title="Remove From Cart"><i className="fa fa-close"></i></a>
-                    </div>
-                  </div>
-                </li>
-                <li className="cart-subtotal text-right">Total: $330</li>
-                <li className="cart-footer">
-                  <div className="row">
-                    <div className="col-xs-6">
-                      <a href="cart.html" className="btn btn-default" title="View Cart">View Cart</a>
-                    </div>
-                    <div className="col-xs-6">
-                      <a href="checkout.html" className="btn btn-default" title="Checkout">Checkout</a>
-                    </div>
-                  </div>
-                </li>
-              </ul>
+            <HeaderCart/>
+              {/* insert cart box here */}
             </div>
           </div>
         </div>

@@ -30,7 +30,6 @@ class Register extends React.Component {
       password: this.state.password,
       password2: this.state.password2
     }
-    console.log('register form submitted');
     this.props.registerUser(userData);
   }
   render() {

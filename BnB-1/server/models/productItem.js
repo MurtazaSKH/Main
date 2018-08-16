@@ -1,21 +1,32 @@
 const mongoose = require ('mongoose');
+const autoIncrement = require ('mongoose-auto-increment');
+// import {MongooseAutoIncrementID} from 'mongoose-auto-increment-reworked';
+var connection = mongoose.createConnection("mongodb://localhost:27017/db_bnb_1");
 
+autoIncrement.initialize(connection);
 const ProductItemSchema = new mongoose.Schema ({
   name : {
     type: String,
-    default: ''
+    default: '',
+    required: true
   },
   productId : {
     type: Number,
-    default: '',
+    default: ''
   },
   description : {
     type: String,
-    default: ''
+    default: 'N/A',
+    required: true
+  },
+  category: {
+    type:String,
+    default: 'all'
   },
   price : {
     type: Number,
-    default: ''
+    default: 0,
+    required: true
   },
   quantity : {
     type: Number,
@@ -30,6 +41,20 @@ const ProductItemSchema = new mongoose.Schema ({
     default: Date.now
   }
 });
+
+ProductItemSchema.plugin(autoIncrement.plugin,{model:'ProductItem',field:'productId',startAt:1});
+// MongooseAutoIncrementID.initialise('productIncrement');
+// const options ={field: 'productId'};
+//
+// const plugin = new MongooseAutoIncrementID(ProductItemSchema, 'ProductItem',options);
+//
+// plugin.applyPlugin()
+//   .then(inc => console.log("auto inc done"+inc))
+//   .catch(err => console.log('auto inc fail'+err));
+//
+// ProductItemSchema.plugin(MongooseAutoIncrementID.plugin, {modelName: 'ProductItem'});
+
+// new MongooseAutoIncrementID(MySchema, 'MyModel', options);
 
 // Auto increment solution currently not working
 // ProductItemSchema.pre('save', function(next) {

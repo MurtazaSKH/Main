@@ -17,7 +17,7 @@ const port  = process.env.PORT || 8080;
 // API Routes
 const users = require('./routes/api/users');
 const products = require('./routes/api/products');
-
+const cart = require('./routes/api/cart');
 // Configuration
 // ================================================================================================
 
@@ -36,6 +36,7 @@ require('../config/passport')(passport);
 // Use routes
 app.use('/api/users',users);
 app.use('/api/products',products);
+app.use('/api/cart',cart);
 // require('./routes')(app);
 // app.use('/api/users',users);
 
