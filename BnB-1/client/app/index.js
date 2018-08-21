@@ -29,7 +29,7 @@ if(localStorage.jwtToken) {
 
   // Get Cart
   // if(localStorage.cart)
-    store.dispatch(getCart());
+    store.dispatch(getCart(decoded.id));
 }
 
 

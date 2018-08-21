@@ -11,6 +11,11 @@ router.get('/test',(req,res) => {
   return res.json({message: 'Cart working'});
 });
 
+// Create Empty cart when user is registered
+router.post('/createNew', (req,res) => {
+  Cart.findOne()
+});
+
 // Add one product item to cart
 router.post('/add',(req,res) => {
 
@@ -97,6 +102,27 @@ router.get('/all',(req,res) => {
 
   Cart.find()
     .then(cartItems => res.json(cartItems))
+    .catch(err => console.log(err));
+});
+
+
+// Get cart for current user on initial load
+// ,passport.authenticate('jwt',{session:false})
+router.get('/userCart',(req,res) => {
+  Cart.findOne({user:req.get('id')})
+    .then(cart => {
+      if(cart) {
+        res.json(cart)
+      }
+      else {
+        const newCart = new Cart({
+          user:req.get('id')
+        });
+        newCart.save()
+          .then(cart => res.json(cart))
+          .catch(err => console.log(err));
+      }
+    })
     .catch(err => console.log(err));
 });
 

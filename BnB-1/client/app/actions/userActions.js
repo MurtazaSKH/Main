@@ -18,9 +18,11 @@ export const loginUser = (userData) => dispatch => {
       setAuthToken(token);
       const decoded =jwt_decode(token);
       dispatch(setCurrentUser(decoded));
-      axios.get('/api/cart/all')
+      // console.log(decoded.id);
+      axios.get('/api/cart/userCart',{headers:{id:decoded.id}})
         .then(
           res => {
+            // console.log('cart success');
             dispatch(setCartStatus(res.data));
           }
         )
@@ -56,4 +58,13 @@ export const setCartStatus = (data) => {
     type: INIT_USER_CART,
     payload: data
   };
+}
+
+// logout user
+export const logoutUser = () => dispatch => {
+  localStorage.removeItem('jwtToken');
+  setAuthToken(false);
+  dispatch(setCurrentUser({}));
+  dispatch(setCartStatus({}));
+  history.push('/');
 }

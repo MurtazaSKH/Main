@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {addCartItem,removeCartItem} from '../../actions/cartActions';
 
 import HeaderCartItem from './headerCartItems';
 
@@ -13,17 +14,33 @@ class HeaderCart extends React.Component {
       cart: {},
       errors: {}
     }
+    this.onClickAdd=this.onClickAdd.bind(this);
+    this.onClickRemove=this.onClickRemove.bind(this);
+  };
+
+  onClickAdd(product_id) {
+    const productData = {
+      user_id:this.props.cart.cart.user,
+      product_id:product_id
+    };
+    this.props.addCartItem(productData);
   }
-
+  onClickRemove(product_id) {
+    const productData = {
+      user_id:this.props.cart.cart.user,
+      product_id:product_id
+    };
+    this.props.removeCartItem(productData);
+  }
+  // On component mount check if there's a cart or render empty
   render() {
-
-    if(this.props.cart.cart[0]) {
+    if(this.props.cart.cart.totalQuantity>0) {
       return(
         <div>
           <ul className="cart-box cart-box-pages active">
               {/*  */}
-              {this.props.cart.cart[0].items.map((item,index) => <HeaderCartItem key={index} itemDetails={item}></HeaderCartItem>)}
-              <li className="cart-subtotal text-right">Total: ${this.props.cart.cart[0].totalPrice}</li>
+              {this.props.cart.cart.items.map((item,index) => <HeaderCartItem key={index} itemDetails={item} addItem={this.onClickAdd} removeItem={this.onClickRemove}></HeaderCartItem>)}
+              <li className="cart-subtotal text-right">Total: ${this.props.cart.cart.totalPrice}</li>
               <li className="cart-footer">
                 <div className="row">
                   <div className="col-xs-6">
@@ -39,7 +56,6 @@ class HeaderCart extends React.Component {
       );
     }
     else {
-      // console.log(this.props.cart.cart[0]);
       return(
         <div>
           <ul className="cart-box cart-box-pages active">
@@ -59,13 +75,13 @@ class HeaderCart extends React.Component {
         </div>
       );
     }
-
-    return(<div>test</div>);
   }
 }
 
 HeaderCart.propTypes = {
   cart: PropTypes.object.isRequired,
+  addCartItem: PropTypes.func.isRequired,
+  // removeCartItem: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 }
 
@@ -74,4 +90,4 @@ const mapStateToProps = (state) => ({
   errors: state.errors
 })
 
-export default connect(mapStateToProps,{})(HeaderCart);
+export default connect(mapStateToProps,{addCartItem,removeCartItem})(HeaderCart);
