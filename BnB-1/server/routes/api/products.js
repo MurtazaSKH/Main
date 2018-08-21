@@ -33,6 +33,7 @@ router.post('/add',passport.authenticate('jwt',{session:false}),(req,res)=> {
           category: req.body.category,
           price: req.body.price,
           quantity: req.body.quantity,
+          imageLink:req.body.imageLink
         });
 
         newProduct.save()

@@ -18,6 +18,7 @@ const port  = process.env.PORT || 8080;
 const users = require('./routes/api/users');
 const products = require('./routes/api/products');
 const cart = require('./routes/api/cart');
+const saveImage = require('./routes/api/saveImage');
 // Configuration
 // ================================================================================================
 
@@ -37,6 +38,7 @@ require('../config/passport')(passport);
 app.use('/api/users',users);
 app.use('/api/products',products);
 app.use('/api/cart',cart);
+app.use('/api/saveImage',saveImage);
 // require('./routes')(app);
 // app.use('/api/users',users);
 

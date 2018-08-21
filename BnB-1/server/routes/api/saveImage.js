@@ -1,28 +1,29 @@
 const express = require('express');
+const router = express.Router();
+const multiparty = require('multiparty');
 const fs = require('fs');
-const multiparty = require ('multiparty');
+const path = require('path');
 
-module.exports = (app) => {
-  app.post('/saveImage/save',(req,res,next)=> {
+router.post('/', (req,res) => {
+  const errors = {};
+  let form = new multiparty.Form();
 
-    console.log('message: Save Called Succesfully!');
-    let form = new multiparty.Form();
+  form.parse(req, (err, fields, files) => {
+    console.log(files.imageFile[0]);
+    let {path: tempPath, originalFilename} = files.imageFile[0];
+    let fileName= 'Item'+Date.now()+path.extname(originalFilename)
+    let copyToPath = "./client/public/images/products/" +fileName;
 
-    form.parse(req, (err,fields,files) => {
-      let {path:tempPath,originalFilename} = files.imageFile[0];
-      let copyToPath = './images/' + originalFilename;
-
-      fs.readFile(tempPath, (err,data) => {
-        fs.writeFiles(newPath,data, (err) => {
-          fs.unlink(tmpPath,() => {
-            res.send("File Uploaded to: "+ newPath);
-          });
+    fs.readFile(tempPath, (err, data) => {
+      // make copy of image to new location
+      fs.writeFile(copyToPath, data, (err) => {
+        // delete temp image
+        fs.unlink(tempPath, () => {
+          res.json({filename:fileName});
         });
       });
-    })
-    function saveImage (req,res) {
+    });
+  })
+});
 
-    }
-  });
-
-}
+module.exports = router;

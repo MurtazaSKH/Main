@@ -1,193 +1,121 @@
-import React, {Component} from 'react';
-import 'whatwg-fetch';
-import {setInStorage,getFromStorage} from '../../utils/storage';
-// const axios = require ('axios');
+import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {uploadImage,addProduct} from '../../actions/productActions';
 
-class AddProduct extends Component {
+
+class AddProduct extends React.Component {
   constructor (props) {
     super(props);
 
     this.state = {
-      isLoading: false,
-      token: '',
-      productName: '',
-      productDesc: '',
-      productPrice: '',
-      productQuantity: '',
-      addProductError: '',
-      pictures: [],
-      selectedFile: '',
-      imagePreviewURL: ''
+      // isLoading: false,
+      name: '',
+      desc: '',
+      price: '',
+      quantity: '',
+      imageFile:'',
+      imagePreviewURL:'',
+      errors:{}
     };
+
+    this.onChange = this.onChange.bind(this);
     this.onAddProduct = this.onAddProduct.bind(this);
-    this.onTextProductName= this.onTextProductName.bind(this);
-    this.onTextProductDesc= this.onTextProductDesc.bind(this);
-    this.onTextProductPrice = this.onTextProductPrice.bind(this);
-    this.onTextProductQuantity = this.onTextProductQuantity.bind(this);
-    this.fileChangedHandler=this.fileChangedHandler.bind(this);
-    this.uploadHandler=this.uploadHandler.bind(this);
+    this.onSaveImage = this.onSaveImage.bind(this);
+    this.onImageChange = this.onImageChange.bind(this);
   }
 
-  fileChangedHandler (event) {
-    // const file = event.target.file[0];
-    this.setState({selectedFile: event.target.files[0]});
-    console.log(event.target.files[0]);
-    let reader = new FileReader();
-    let file = event.target.files[0];
+  onChange(e) {
+    this.setState({[e.target.name]:e.target.value});
+  }
 
+  // When user selects image preview is displayed but not saved to server
+  onImageChange(e) {
+    this.setState({imageFile:e.target.files[0]});
+
+    let reader = new FileReader();
+    let file=e.target.files[0];
     reader.onloadend = () => {
-      this.setState ({
-        selectedFile: file,
+      this.setState({
+        imageFile:file,
         imagePreviewURL: reader.result
       });
     }
-
     reader.readAsDataURL(file);
   }
-
-  uploadImage (imageFile) {
-
-  }
-  uploadHandler () {
-    // console.log(this.state.selectedFile);
-    // axios.post('/file-upload', this.state.selectedFile,{
-    // onUploadProgress: progressEvent => {
-    //   console.log(progressEvent.loaded / progressEvent.total)
-    // }})
-    // uploadImage(this.state.selectedFile);
-    return new Promise((resolve,reject)=> {
-      let imageFormData = new FormData();
-      imageFormData.append('imageFile',this.state.selectedFile);
-      var xhr = new XMLHttpRequest();
-      // ../../../../../BnB-1/server/routes/saveImage.js
-      var url = 'E:\Main\BnB-1\client\app\components\Products\saveImage.js'
-      xhr.open('post','/saveImage/save',true);
-      console.log('Response:'+this.response)
-      xhr.onload = function() {
-        console.log('Status:'+this.status)
-        if(this.status ==200) {
-          resolve(this.response);
-        } else {
-          reject (this.statusText);
-        }
-      };
-
-      xhr.send(imageFormData);
-    });
+  // When user uploads image to server
+  onSaveImage(e) {
+    e.preventDefault();
+    let imageFile = new FormData(document.getElementById('imageForm'));
+    this.props.uploadImage(imageFile);
   }
 
-  onAddProduct (event) {
-    event.preventDefault();
-    const {isLoading, productName, productDesc, productPrice, productQuantity, addProductError} = this.state;
-
-    this.setState ({isLoading: true});
-    console.log('Adding Product');
-    fetch('/api/products/add', {
-      method : 'POST',
-      headers :
-      {
-        'Content-Type' : 'application/json',
-        'Accept' : 'application/json'
-      },
-      body: JSON.stringify ({
-        name: productName,
-        description: productDesc,
-        price: productPrice,
-        quantity: productQuantity
-      })
-    })
-    .then(res => res.json())
-    .then(json => {
-      if(json.success) {
-        this.setState ({addProductError:json.message, isLoading: false, productName: '', productDesc:'', productPrice:'',productQuantity:''})
-      } else {
-        this.setState ({addProductError:json.message,isLoading: false});
-      }
-    });
-  }
-
-  onTextProductName (event) {
-    this.setState ({productName: event.target.value});
-  }
-
-  onTextProductDesc (event) {
-    this.setState ({productDesc: event.target.value});
-  }
-  onTextProductPrice (event) {
-    this.setState ({productPrice: event.target.value});
-  }
-  onTextProductQuantity (event) {
-    this.setState ({productQuantity: event.target.value});
+  // Checking when image is added
+  onAddProduct(e) {
+    const productData = {
+      name: this.state.name,
+      description: this.state.desc,
+      price: this.state.price,
+      // category: this.state.category,
+      quantity: this.state.quantity,
+      imageLink: this.props.product.filename
+    };
+    this.props.addProduct(productData);
   }
 
   render () {
-    const {
-      isLoading, token, productName, productDesc, productPrice, productQuantity, addProductError, selectedFile, imagePreviewURL
-    } = this.state;
     let $imagePreview = null;
-    if(imagePreviewURL) {
-      $imagePreview = (<div><img style={{maxWidth:'100%', padding:'15px 0'}} src={imagePreviewURL} /><button onClick={this.uploadHandler}>Upload</button></div>);
+    if(this.state.imagePreviewURL) {
+      $imagePreview = (<div><img style={{maxWidth:'100%', padding:'15px 0'}} src={this.state.imagePreviewURL} /><button type="Submit" className="btn btn-default">Upload</button></div>);
+      // Change upload to "Change" when image is uploaded
+      // Loading animation when uploading
     }
 
-    if(isLoading) {
-      return (<div><p>Loading...</p></div>);
-    }
 
     return (<div><section className="account-page login-page register-page">
       <div className="container">
         <h3 className="register-page-heading text-center">Add New Product</h3>
         <div className="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-          <div className="register-form" onSubmit={this.onAddProduct}>
-            <h5 className="register-heading text-center">Please Fill the Form {
-              (addProductError)
-                ? (<div> {addProductError}</div>)
-                : (null)
-            }</h5>
+          <div className="register-form">
+            <h5 className="register-heading text-center">Please Fill the Form </h5>
             <div className="form-group">
-              <input type="text" className="form-control"  placeholder="Enter Product Name" value={productName} onChange={this.onTextProductName} />
+              <input type="text" className="form-control"  placeholder="Enter Product Name" name="name" value={this.state.name} onChange={this.onChange} />
             </div>
             <div className="form-group">
-              <input type="text" className="form-control"  placeholder="Enter Product Description" value={productDesc} onChange={this.onTextProductDesc} />
+              <input type="text" className="form-control"  placeholder="Enter Product Description" name="desc" value={this.state.desc} onChange={this.onChange} />
             </div>
             <div className="form-group">
-              <input type="text" className="form-control"  placeholder="Enter Product Price" value={productPrice} onChange={this.onTextProductPrice} />
+              <input type="text" className="form-control" name="price" placeholder="Enter Product Price" value={this.state.price} onChange={this.onChange} />
             </div>
             <div className="form-group">
-              <input type="text" className="form-control" value={productQuantity}
-            onChange={this.onTextProductQuantity} placeholder="Enter Product Quantity"/>
+              <input type="text" className="form-control" name="quantity" value={this.state.quantity}
+            onChange={this.onChange} placeholder="Enter Product Quantity"/>
             </div>
             <div className="form-group">
-              <label htmlFor="files" className="btn btn-default" style={{backgroundColor:'#d0ef8b'}}>Select Image</label>
-              <input id="files" type="file" style={{display:'none'}} onChange={this.fileChangedHandler} text="asd"/>
-              {$imagePreview}
+              <form id="imageForm" onSubmit={this.onSaveImage}>
+                {/* onClick={this.onSubmit} */}
+                <label htmlFor="imageFile" className="btn btn-default" style={{backgroundColor:'#d0ef8b'}}>Select Image</label>
+                <input id="imageFile" type="file" style={{display:'none'}} name="imageFile" onChange={this.onImageChange}/>
+                {$imagePreview}
 
+              </form>
             </div>
             <button onClick={this.onAddProduct} className="btn btn-default">Add Product</button>
-            {/* <div className="login-text">
-              <div className="row">
-                <div className="col-xs-6">
-                  <a href="forget-password.html" title="Forgot Password?">Forgot Password?</a>
-                </div>
-                <div className="col-xs-6 text-right">
-                  <a href="#" title="Register With Us" onClick={this.changeForm}>Have An Account?</a>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-6">
-                <a href="#" title="Login With Facebook" className="btn social-login fb-login"><i className="fa fa-facebook fa-lg"></i>Login with facebook</a>
-              </div>
-              <div className="col-md-6">
-                <a href="#" title="Login With Google" className="btn social-login google-login"><i className="fa fa-google-plus fa-lg"></i>login with google</a>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>
     </section></div>);
   }
-
-
 }
 
-export default AddProduct;
+AddProduct.propTypes = {
+  uploadImage: PropTypes.func.isRequired,
+  addProduct: PropTypes.func.isRequired,
+  product: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  product: state.product
+})
+
+export default connect(mapStateToProps,{uploadImage,addProduct})(AddProduct);
