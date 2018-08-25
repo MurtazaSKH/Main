@@ -25,6 +25,7 @@ class AddProduct extends React.Component {
     this.onImageChange = this.onImageChange.bind(this);
   }
 
+  // Chaning input fields set state
   onChange(e) {
     this.setState({[e.target.name]:e.target.value});
   }
