@@ -13,7 +13,8 @@ export function load(callback) {
           const items = data.map(item => ({
             name: item[0],
             link: item[1],
-            description: item[2]
+            description: item[2],
+            type: item[3]
           })) || [];
 
           callback({
