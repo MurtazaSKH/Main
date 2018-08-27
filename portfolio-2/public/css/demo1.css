@@ -19,7 +19,7 @@
 	--gap-horizontal: 10px;
 	--gap-vertical: 5px;
 	--time-anim: 4s;
-	--delay-anim: 2s;
+	--delay-anim: 1s;
 	--blend-mode-1: none;
 	--blend-mode-2: none;
 	--blend-mode-3: none;
@@ -40,6 +40,11 @@
 	animation-iteration-count: infinite;
 }
 
+.content__AllText {
+  position: absolute;
+  right:20%;
+  bottom:30%;
+}
 .content__title {
 	font-size: 4vw;
 	/* margin: 35vh 0 0 0; */
@@ -55,7 +60,6 @@
 	font-family: 'TitleFont2';
 	animation-delay: calc(var(--delay-anim) + var(--time-anim) * 0.2);
 }
-
 
 .content__text {
 	font-family: 'TitleFont2';
@@ -75,15 +79,33 @@
 	animation-delay: calc(var(--delay-anim) + var(--time-anim) * 0.25);
 }
 
-@media screen and (max-width: 55em) {
+@media screen and (max-width: 950px) {
 	.content__text {
-		position: relative;
-		right: auto;
-		top: auto;
-		font-size: 1.25em;
-		padding: 0 1em;
-		text-align: center;
+    position: absolute;
+    right: 50%;
+    top: 50%;
+    font-size: 2.55em;
+    padding: 0 1em;
+    text-align: left;
+    line-height: 33px;
 	}
+  .largeScreen {
+    display: none;
+  }
+  .mediumSmallScreen {
+    display: block;
+    min-height: 500px;
+    background-image: url('../img/img1small.jpg');
+  }
+  .introText {
+    left: auto;
+    top: auto;
+  }
+}
+@media screen and (min-width:951px) {
+  .mediumSmallScreen {
+    display: none;
+  }
 }
 
 /* Glitch styles */
@@ -147,7 +169,7 @@
 /* Animations */
 
 @keyframes glitch-anim-1 {
-	0% { 
+	0% {
 		opacity: 1;
 		transform: translate3d(var(--gap-horizontal),0,0);
 		-webkit-clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%);
@@ -206,7 +228,7 @@
 }
 
 @keyframes glitch-anim-2 {
-	0% { 
+	0% {
 		opacity: 1;
 		transform: translate3d(calc(-1 * var(--gap-horizontal)),0,0);
 		-webkit-clip-path: polygon(0 25%, 100% 25%, 100% 30%, 0 30%);
@@ -265,7 +287,7 @@
 }
 
 @keyframes glitch-anim-3 {
-	0% { 
+	0% {
 		opacity: 1;
 		transform: translate3d(0, calc(-1 * var(--gap-vertical)), 0) scale3d(-1,-1,1);
 		-webkit-clip-path: polygon(0 1%, 100% 1%, 100% 3%, 0 3%);
@@ -356,7 +378,7 @@
 }
 
 @keyframes glitch-anim-text {
-	0% { 
+	0% {
 		transform: translate3d(calc(-1 * var(--gap-horizontal)),0,0) scale3d(-1,-1,1);
 		-webkit-clip-path: polygon(0 20%, 100% 20%, 100% 21%, 0 21%);
 		clip-path: polygon(0 20%, 100% 20%, 100% 21%, 0 21%);
@@ -401,8 +423,8 @@
 
 /* Flash */
 @keyframes glitch-anim-flash {
-	0%, 5% { 
-		opacity: 0.2; 
+	0%, 5% {
+		opacity: 0.2;
 		transform: translate3d(var(--gap-horizontal), var(--gap-vertical), 0);
 	}
 	5.5%, 100% {
@@ -410,4 +432,3 @@
 		transform: translate3d(0, 0, 0);
 	}
 }
-

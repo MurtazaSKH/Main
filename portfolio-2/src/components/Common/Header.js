@@ -32,10 +32,12 @@ class Header extends React.Component {
                               </li>
                           </ul>
                           <a href="#tc-offcanvas" className="uk-navbar-toggle uk-visible-small tc-off-toggle"
-                              data-uk-offcanvas="{mode:&#39;slide&#39;}"></a>
+                              data-uk-offcanvas="{}">
+                                 <i className="li li-arrows-hamburger2"></i>
+                              </a>
                           <div className="uk-navbar-content tc-logo uk-visible-small">
                               <a href="#">
-                                  Fiz
+                                  MSKH
                               </a>
                           </div>
                       </nav>

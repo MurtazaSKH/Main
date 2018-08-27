@@ -22,7 +22,7 @@ class PortfolioItem extends React.Component {
   	// 						<div class="box__deco box__deco--top">&#10153;</div>
   	// 					</div>
     // </a>
-    <div data-uk-filter={this.props.item.type} data-grid-prepared="true" aria-hidden="true">
+    <div data-uk-filter={this.props.item.type} data-grid-prepared="true" aria-hidden="false" style={{position: 'absolute', boxSizing: 'borderBox', paddingLeft: '10px', paddingBottom: '10px', top: '0px', opacity: '1', left: '0px', display: 'block'}}>
 
         <div className="pfolio-item">
             <img src="img/2.jpg" alt="Portfolio Image"/>

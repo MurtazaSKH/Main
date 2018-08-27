@@ -16,8 +16,8 @@ class Landing extends React.Component {
     return (
       <div>
         {/* Landing Section */}
-        <div className="tc-slider" id="tc-slider">
-            <div className="content">
+        <div className="tc-slider" id="tc-slider" style={{maxWidth:'100%'}}>
+            <div className="content uk-slidenav-position largeScreen">
                 <div className="glitch">
                     <div className="glitch__img"></div>
                     <div className="glitch__img"></div>
@@ -25,14 +25,26 @@ class Landing extends React.Component {
                     <div className="glitch__img"></div>
                     <div className="glitch__img"></div>
                 </div>
-                <h2 className="content__title">Hi!</h2>
-                <h2 className="content__text">I’m Murtaza.
-                    <br/>A Full Stack Dev.</h2>
+                <div className="">
+                  {/* <h2 className="content__title"></h2> */}
+                  <h2 className="content__text">
+                      Hi!
+                      <br/>I’m Murtaza.
+                      <br/>A Full Stack Dev.</h2>
+                </div>
+
                 <div className="down-arrow pulse-infinite">
                     <a href="#tc-about" data-uk-smooth-scroll="{offset: 80}">
                         <i className="li li-magic-mouse"></i>
                     </a>
                 </div>
+            </div>
+            <div className="content mediumSmallScreen">
+              <h2 className="content__text">
+                Hi!
+                <br/>I'm Murtaza
+                <br/>A Full Stack Dev.
+              </h2>
             </div>
         </div>
 

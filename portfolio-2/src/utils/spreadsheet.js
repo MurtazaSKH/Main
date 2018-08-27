@@ -5,7 +5,7 @@ export function load(callback) {
     window.gapi.client.sheets.spreadsheets.values
       .get({
         spreadsheetId: config.spreadsheetId,
-        range: "Sheet1!A2:C"
+        range: "Sheet1!A2:D"
       })
       .then(
         response => {

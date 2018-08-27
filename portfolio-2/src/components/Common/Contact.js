@@ -27,7 +27,8 @@ class Contact extends React.Component {
                           <div className="uk-width-medium-1-2">
                               <div className="contact-info uk-animation-hover">
                                   <i className="li li-envelope uk-animation-scale"></i>
-                                  <p>connect@murtazahashmi.com</p>
+                                  <p><a href="mailto:murtazahashmi@outlook.com">murtazahashmi@outlook.com</a></p>
+                                  {/* connect@murtazahashmi.com */}
                               </div>
                           </div>
                       </div>
@@ -52,7 +53,7 @@ class Contact extends React.Component {
                               </div>
                           </div>
                           <div className="form-button mt30">
-                              <button className="readon pill" type="submit">Send Message</button>
+                              <button className="readon pill" type="submit">Send</button>
                           </div>
                       </form>
                   </div>

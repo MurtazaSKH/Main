@@ -44,7 +44,7 @@ const About = () => {
                     <div className="services-item uk-animation-hover">
                         <i className="uk-animation-scale li li-computer-imac-slim"></i>
                         <h3>Front & Back-End Dev</h3>
-                        <p>Full stack development with various tools, more recently React and Node Js</p>
+                        <p>Full stack development with various technologies, more recently React and Node Js</p>
                     </div>
                 </div>
                 <div className="uk-width-medium-1-3">
