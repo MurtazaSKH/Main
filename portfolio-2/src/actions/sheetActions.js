@@ -6,7 +6,7 @@ import config from '../config';
 
 export const loadPortfolioItems = () => dispatch => {
   window.gapi.load("client", () => {
-    console.log('running init');
+    // console.log('running init');
     window.gapi.client.init({
       apiKey: config.apiKey,
       // Your API key will be automatically added to the Discovery Document URLs.
@@ -15,16 +15,17 @@ export const loadPortfolioItems = () => dispatch => {
       // 3. Initialize and make the API request.
       load((data, error) => {
         if (data) {
+          dispatch(setCurrentStatus({link: 'complete'}));
           dispatch(setPortfolioItems(data));
         } else {
+          dispatch(setCurrentStatus({link: 'failed'}));
           console.log('error:' + error)
         }
       }
     );
-    });
+    })
+    .catch( err=> dispatch(setCurrentStatus({link: 'failed'})));
   });
-
-  dispatch(setCurrentStatus({call: '1st'}));
 }
 
 export const setPortfolioItems = (data) => {

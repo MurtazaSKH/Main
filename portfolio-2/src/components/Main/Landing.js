@@ -1,9 +1,9 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+// import {Link} from 'react-router-dom';
 
 
 import Portfolio from '../Portfolio/Portfolio';
-import Testimonial from '../Common/Testimonial';
+// import Testimonial from '../Common/Testimonial';
 import About from '../Common/About';
 import Contact from '../Common/Contact';
 

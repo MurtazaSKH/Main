@@ -11,34 +11,69 @@ class PortfolioItem extends React.Component {
       boxPositionCss:[]
     }
   }
+
+  renderSwitch(type) {
+    switch(type) {
+      case 'Des':
+        return 'Design';
+      case 'Dev':
+        return 'Development';
+      case 'Des,Dev':
+        return 'Design & Development';
+      case 'QA':
+        return 'Quality Assurance';
+      default:
+        return '';
+    }
+  }
+
   render () {
     return (
-    //     <a className="grid__item" href="#preview-1">
-    //       <div class="box">
-  	// 						<div class="box__shadow"></div>
-  	// 						<img class="box__img" src="img/12.jpg" alt="Some image"/>
-  	// 						<h3 class="box__title box__title--straight box__title--left"><span class="box__title-inner" data-hover={this.props.item.name}>{this.props.item.name}</span></h3>
-  	// 						<h4 class="box__text box__text--bottom box__text--right"><span class="box__text-inner">Design</span></h4>
-  	// 						<div class="box__deco box__deco--top">&#10153;</div>
-  	// 					</div>
-    // </a>
     <div data-uk-filter={this.props.item.type} data-grid-prepared="true" aria-hidden="false" style={{position: 'absolute', boxSizing: 'borderBox', paddingLeft: '10px', paddingBottom: '10px', top: '0px', opacity: '1', left: '0px', display: 'block'}}>
 
         <div className="pfolio-item">
-            <img src="img/2.jpg" alt="Portfolio Image"/>
+
+          <div >
+            <img src={this.props.item.imageLink?this.props.item.imageLink:"img/filler.jpg"} alt="Portfolio"/>
             <div className="caption">
                 <h3>
-                    <a href="#">{this.props.item.name}</a>
+                    <a>{this.props.item.name}</a>
                 </h3>
-                <p>{this.props.item.type}</p>
+                <p>{this.renderSwitch(this.props.item.type)}</p>
             </div>
             <div className="link-wrap">
-                <a href="img/2.jpg" data-uk-lightbox="{group:&#39;tc-works&#39;}">
-                    <i className="uk-icon-search"></i>
+              {/*  href="img/2.jpg"*/}
+                <a href={'#mod'+this.props.item.id} data-uk-modal>
+                    <i className="li li-arrows-expand"></i>
                 </a>
-                <a href="#">
-                    <i className="uk-icon-link"></i>
-                </a>
+
+            </div>
+          </div>
+
+        </div>
+        {/* Modal */}
+        <div id={'mod'+this.props.item.id} className="uk-modal">
+            <div className="uk-modal-dialog .uk-padding-remove" style={{padding:0,width:'800px'}}>
+
+                <div className="uk-cover-background">
+                  <a className="uk-modal-close uk-close" style={{float:'right',position:'absolute'}}>
+                    <i className="li li-arrows-remove"></i>
+                  </a>
+                  <img src={this.props.item.imageLink?this.props.item.imageLink:"img/filler.jpg"} alt="Portfolio Image" />
+                </div>
+                <div style={{padding:'30px'}}>
+
+                    <h2 style={{color:'black',fontFamily: 'TitleFont'}}> {this.props.item.name}</h2>
+                    <h3 style={{borderBottom:'1px solid #00000030',paddingBottom:'10px',fontFamily:'TitleFont'}}>{this.renderSwitch(this.props.item.type)}</h3>
+                    <h3 style={{fontFamily:'TitleFont'}}>Tech Used: {this.props.item.tech}</h3>
+                    <h3 style={{fontFamily:'TitleFont',paddingBottom:'35px'}}> {this.props.item.description}</h3>
+
+                    {/* .tc-contact .form-button button */}
+                    <a href={this.props.item.link} target="_blank"  style={{marginTop:'10px',padding: '10px 40px',
+    backgroundColor: 'var(--main-bg-color)', fontFamily:'TitleFont'}} >Visit</a>
+
+                </div>
+
             </div>
         </div>
     </div>

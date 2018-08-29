@@ -1,9 +1,6 @@
 import React from 'react';
 
 class Footer extends React.Component {
-  constructor() {
-    super();
-  }
 
   render() {
     return (
@@ -16,11 +13,14 @@ class Footer extends React.Component {
                   </div>
                   <div className="uk-width-medium-1-2">
                       <ul className="uk-subnav-line uk-subnav uk-margin-remove uk-align-medium-right">
+                        <li>
+                            <a href="https://github.com/MurtazaSKH/">GITHUB</a>
+                        </li>
                           <li>
-                              <a href="#">TWITTER</a>
+                              <a href="https://twitter.com/MurtazaSKH">TWITTER</a>
                           </li>
                           <li>
-                              <a href="#">LINKEDIN</a>
+                              <a href="https://www.linkedin.com/in/murtazahashmi/">LINKEDIN</a>
                           </li>
                       </ul>
                       <a href="#tc-slider" className="tc-totopscroll" title="Go Top" data-uk-smooth-scroll="">
