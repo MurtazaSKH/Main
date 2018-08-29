@@ -54,7 +54,7 @@ class Portfolio extends React.Component {
   }
 
   componentDidMount() {
-  // this.props.loadPortfolioItems();
+  this.props.loadPortfolioItems();
   }
 
 
@@ -63,8 +63,7 @@ class Portfolio extends React.Component {
       // console.log(this.props.portfolioItems.portfolioItems.items);
       this.state.items = this.props.portfolioItems.portfolioItems.items;
     }
-    // this.props.status.link=='notchecked'
-    if(false){
+    if(this.props.status.link=='notchecked'){
       return (
         <section className="tc-works sec-spacer sec-color" id="tc-work">
             <div className="uk-container uk-container-center">

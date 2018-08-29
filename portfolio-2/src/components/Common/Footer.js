@@ -14,13 +14,13 @@ class Footer extends React.Component {
                   <div className="uk-width-medium-1-2">
                       <ul className="uk-subnav-line uk-subnav uk-margin-remove uk-align-medium-right">
                         <li>
-                            <a href="https://github.com/MurtazaSKH/">GITHUB</a>
+                            <a href="https://github.com/MurtazaSKH/" target="_blank">GITHUB</a>
                         </li>
                           <li>
-                              <a href="https://twitter.com/MurtazaSKH">TWITTER</a>
+                              <a href="https://twitter.com/MurtazaSKH" target="_blank">TWITTER</a>
                           </li>
                           <li>
-                              <a href="https://www.linkedin.com/in/murtazahashmi/">LINKEDIN</a>
+                              <a href="https://www.linkedin.com/in/murtazahashmi/" target="_blank">LINKEDIN</a>
                           </li>
                       </ul>
                       <a href="#tc-slider" className="tc-totopscroll" title="Go Top" data-uk-smooth-scroll="">
