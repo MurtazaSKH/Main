@@ -1,5 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
+import {saveContactAction} from '../../actions/sheetActions';
 
 
 class Contact extends React.Component {
@@ -8,6 +11,11 @@ class Contact extends React.Component {
     this.state = {
       name:''
     }
+    this.onSubmitClick = this.onSubmitClick.bind(this);
+  }
+
+  onSubmitClick (e) {
+    this.props.saveContactAction();
   }
   render () {
     return (
@@ -33,7 +41,8 @@ class Contact extends React.Component {
                           </div>
                       </div>
                       <div id="form-messages"></div>
-                      <form className="uk-form contact-form" id="contact-form" method="post" action="">
+                      {/* method="post" action="" */}
+                      <form className="uk-form contact-form" id="contact-form" >
                           <div className="uk-grid" data-uk-grid-margin="">
                               <div className="uk-width-medium-1-2 uk-row-first">
                                   <div className="form-field">
@@ -53,7 +62,7 @@ class Contact extends React.Component {
                               </div>
                           </div>
                           <div className="form-button mt30">
-                              <button className="readon pill" type="submit">Send</button>
+                              <button className="readon pill" onClick={this.onSubmitClick}>Send</button>
                           </div>
                       </form>
                   </div>
@@ -64,4 +73,12 @@ class Contact extends React.Component {
   }
 }
 
-export default Contact;
+Contact.protoropTypes = {
+  saveContactAction: PropTypes.func.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  status:state.status.status
+})
+
+export default connect(mapStateToProps,{saveContactAction})(Contact);

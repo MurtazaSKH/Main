@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router,Route,Switch} from 'react-router-dom';
+import {BrowserRouter,Route,Switch} from 'react-router-dom';
+// Router instead of BrowserRouter
 import {Provider} from 'react-redux';
 
 import store from './store.js'
@@ -12,14 +13,16 @@ import history from './utils/history';
 
 ReactDOM.render((
   <Provider store={store}>
-    <Router history={history}>
+    {/*  history={history}*/}
+    {/* <BrowserRouter > */}
       <App>
-        <Switch>
+        {/* <Switch>
           <Route exact path='/' component={Landing}/>
-          {/* <Route path="*" component={NotFound}/> */}
-        </Switch>
+          <Route path="*" component={NotFound}/>
+        </Switch> */}
+        <Landing/>
       </App>
-    </Router>
+    {/* </BrowserRouter> */}
   </Provider>
 ), document.getElementById('app'));
 // registerServiceWorker();

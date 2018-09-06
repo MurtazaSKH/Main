@@ -11,6 +11,7 @@ class Portfolio extends React.Component {
   constructor (props) {
     super(props);
     this.state= {
+      updateitems:false,
       items: [
         {
           id:1,
@@ -54,14 +55,16 @@ class Portfolio extends React.Component {
   }
 
   componentDidMount() {
-  this.props.loadPortfolioItems();
+  // this.props.loadPortfolioItems();
+  // this.forceUpdate();
   }
 
 
   render () {
-    if(this.props.portfolioItems.portfolioItems.items) {
+    if(this.props.portfolioItems.portfolioItems.items && !this.state.updateitems) {
       // console.log(this.props.portfolioItems.portfolioItems.items);
-      this.state.items = this.props.portfolioItems.portfolioItems.items;
+      // this.state.items = this.props.portfolioItems.portfolioItems.items;
+      this.setState({items:this.props.portfolioItems.portfolioItems.items,updateitems:true});
     }
     if(this.props.status.link=='notchecked'){
       return (
@@ -80,11 +83,11 @@ class Portfolio extends React.Component {
     else {
       return (
         <section className="tc-works sec-spacer sec-color" id="tc-work">
-            <div className="uk-container uk-container-center">
+            <div className="uk-container uk-container-center" data-uk-grid-match data-uk-observe>
                 <h1 className="uk-margin-top-remove uk-text-center mb60" style={{color:'#1d2121'}}>Recent Work</h1>
                 <div className="filter-style1 mb60">
                     <ul id="filter">
-                        <li data-uk-filter="" className="uk-active">
+                        <li data-uk-filter="" id="showAll" className="uk-active">
                             <a href="">All</a>
                         </li>
                         <li data-uk-filter="Des" className="">
@@ -98,8 +101,10 @@ class Portfolio extends React.Component {
                         </li>
                     </ul>
                 </div>
-                <div className="uk-grid-width-large-1-3 uk-grid-width-medium-1-2 uk-grid-width-small-1-1" data-uk-grid="{gutter: 10, controls: &#39;#filter&#39;}">
+                <div id="itemsGrid" className="uk-grid-width-large-1-3 uk-grid-width-medium-1-2 uk-grid-width-small-1-1 uk-grid uk-grid-preserve" data-uk-grid="{gutter: 10, controls: &#39;#filter&#39;}" data-uk-grid-match data-uk-observe>
                     {this.state.items.map((item,index) => <PortfolioItem key={index} item={item} ></PortfolioItem>)}
+
+
                 </div>
             </div>
         </section>

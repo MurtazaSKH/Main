@@ -30,3 +30,16 @@ export function load(callback) {
       );
   });
 }
+//+ data.col + data.row
+export function saveContact(data,successCallback) {
+  window.gapi.client.load("sheets", "v4", () => {
+    window.gapi.client.sheets.spreadsheets.values
+    .update({
+      apiKey: config.apiKey,
+      spreadsheetId: config.spreadsheetId,
+      range: 'Sheet2!A1' ,
+      valueInputOption: 'USER_ENTERED',
+      resource: data.value
+    }).then(successCallback);
+  });
+}

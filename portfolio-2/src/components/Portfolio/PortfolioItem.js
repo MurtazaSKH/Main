@@ -29,12 +29,12 @@ class PortfolioItem extends React.Component {
 
   render () {
     return (
-    <div data-uk-filter={this.props.item.type} data-grid-prepared="true" aria-hidden="false" style={{position: 'absolute', boxSizing: 'borderBox', paddingLeft: '10px', paddingBottom: '10px', top: '0px', opacity: '1', left: '0px', display: 'block'}}>
+    <div data-uk-filter={this.props.item.type} data-grid-prepared="true" aria-hidden="false" style={{position: 'absolute', boxSizing: 'borderBox', paddingLeft: '10px', paddingBottom: '10px', top: '0px', opacity: '1', left: '0px', display: 'block',minHeight:'252px'}}>
 
         <div className="pfolio-item">
 
           <div >
-            <img src={this.props.item.imageLink?this.props.item.imageLink:"img/filler.jpg"} alt="Portfolio"/>
+            <img src={this.props.item.imageLink?this.props.item.imageLink:"img/filler.jpg"} style={{minHeight:'252px'}} alt="Portfolio"/>
             <div className="caption">
                 <h3>
                     <a>{this.props.item.name}</a>
