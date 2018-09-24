@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {uploadImage,addProduct} from '../../actions/productActions';
-
+import classnames from 'classnames';
 
 class AddProduct extends React.Component {
   constructor (props) {
@@ -16,6 +16,8 @@ class AddProduct extends React.Component {
       quantity: '',
       imageFile:'',
       imagePreviewURL:'',
+      imageUploaded:'None',
+      showError:'None',
       errors:{}
     };
 
@@ -32,7 +34,7 @@ class AddProduct extends React.Component {
 
   // When user selects image preview is displayed but not saved to server
   onImageChange(e) {
-    this.setState({imageFile:e.target.files[0]});
+    this.setState({imageFile:e.target.files[0],imageUploaded:'false'});
 
     let reader = new FileReader();
     let file=e.target.files[0];
@@ -49,10 +51,15 @@ class AddProduct extends React.Component {
     e.preventDefault();
     let imageFile = new FormData(document.getElementById('imageForm'));
     this.props.uploadImage(imageFile);
+    this.setState({imageUploaded:'True',showError:'None'});
   }
 
   // Checking when image is added
   onAddProduct(e) {
+    if(this.state.imageUploaded==='false') {
+      this.setState({showError:'Inline'})
+      // If user says continue without image change state to 'None'
+    }
     const productData = {
       name: this.state.name,
       description: this.state.desc,
@@ -61,6 +68,7 @@ class AddProduct extends React.Component {
       quantity: this.state.quantity,
       imageLink: this.props.product.filename
     };
+
     this.props.addProduct(productData);
   }
 
@@ -72,7 +80,8 @@ class AddProduct extends React.Component {
       // Loading animation when uploading
     }
 
-
+    const {errors} = this.props;
+    // console.log(errors);
     return (<div><section className="account-page login-page register-page">
       <div className="container">
         <h3 className="register-page-heading text-center">Add New Product</h3>
@@ -80,17 +89,21 @@ class AddProduct extends React.Component {
           <div className="register-form">
             <h5 className="register-heading text-center">Please Fill the Form </h5>
             <div className="form-group">
-              <input type="text" className="form-control"  placeholder="Enter Product Name" name="name" value={this.state.name} onChange={this.onChange} />
+              <input type="text" className={classnames('form-control',{'error-input-border':errors.name})}  placeholder="Enter Product Name" name="name" value={this.state.name} onChange={this.onChange} />
+              {errors.name && (<label className="error-feedback">{errors.name}</label>)}
             </div>
             <div className="form-group">
-              <input type="text" className="form-control"  placeholder="Enter Product Description" name="desc" value={this.state.desc} onChange={this.onChange} />
+              <input type="text" className={classnames('form-control',{'error-input-border':errors.description})}  placeholder="Enter Product Description" name="desc" value={this.state.desc} onChange={this.onChange} />
+              {errors.description && (<label className="error-feedback">{errors.description}</label>)}
             </div>
             <div className="form-group">
-              <input type="text" className="form-control" name="price" placeholder="Enter Product Price" value={this.state.price} onChange={this.onChange} />
+              <input type="text" className={classnames('form-control',{'error-input-border':errors.price})} name="price" placeholder="Enter Product Price" value={this.state.price} onChange={this.onChange} />
+              {errors.price && (<label className="error-feedback">{errors.price}</label>)}
             </div>
             <div className="form-group">
-              <input type="text" className="form-control" name="quantity" value={this.state.quantity}
+              <input type="text" className={classnames("form-control",{'error-input-border':errors.quantity})} name="quantity" value={this.state.quantity}
             onChange={this.onChange} placeholder="Enter Product Quantity"/>
+              {errors.quantity && (<label className="error-feedback">{errors.quantity}</label>)}
             </div>
             <div className="form-group">
               <form id="imageForm" onSubmit={this.onSaveImage}>
@@ -101,6 +114,7 @@ class AddProduct extends React.Component {
 
               </form>
             </div>
+            <label className="error-feedback" name="uploadImageError" style={{display:this.state.showError}}>Please Upload Image before proceeding or it will not be saved.</label>
             <button onClick={this.onAddProduct} className="btn btn-default">Add Product</button>
           </div>
         </div>
@@ -116,7 +130,8 @@ AddProduct.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  product: state.product
+  product: state.product,
+  errors: state.errors
 })
 
 export default connect(mapStateToProps,{uploadImage,addProduct})(AddProduct);

@@ -6,7 +6,7 @@ import {addCartItem,removeCartItem} from '../../actions/cartActions';
 
 import HeaderCartItem from './headerCartItems';
 
-
+// Cart that is displayed when user hovers cart icon in header bar
 class HeaderCart extends React.Component {
   constructor() {
     super();
@@ -18,6 +18,7 @@ class HeaderCart extends React.Component {
     this.onClickRemove=this.onClickRemove.bind(this);
   };
 
+  // Updating cart item, by adding one more
   onClickAdd(product_id) {
     const productData = {
       user_id:this.props.cart.cart.user,
@@ -25,6 +26,7 @@ class HeaderCart extends React.Component {
     };
     this.props.addCartItem(productData);
   }
+  // Updating cart item, by removing one
   onClickRemove(product_id) {
     const productData = {
       user_id:this.props.cart.cart.user,

@@ -1,8 +1,9 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {registerUser} from '../../actions/userActions';
+import { connect } from 'react-redux';
+import { registerUser } from '../../actions/userActions';
+import classnames from 'classnames';
 
 class Register extends React.Component {
   constructor() {
@@ -20,7 +21,7 @@ class Register extends React.Component {
   }
 
   onChange(e) {
-    this.setState({[e.target.name]:e.target.value});
+    this.setState({ [e.target.name]: e.target.value });
   }
   onSubmit(e) {
     e.preventDefault();
@@ -33,6 +34,7 @@ class Register extends React.Component {
     this.props.registerUser(userData);
   }
   render() {
+    const { errors } = this.props;
     return (
       <div>
         <section className="account-page login-page register-page">
@@ -40,27 +42,23 @@ class Register extends React.Component {
             <h3 className="register-page-heading text-center">Sign Up</h3>
             <div className="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
               <form className="register-form" onSubmit={this.onSubmit}>
-                {/* <h5 className="register-heading text-center">Please Fill the Form {
-                  (signUpError)
-                    ? (<div> {signUpError}</div>)
-                    : (null)
-                }</h5> */}
                 <div className="form-group">
-                  <input type="text" className="form-control" name="name"  placeholder="Enter Your Name" value={this.state.name} onChange={this.onChange} />
+                  <input type="text" className={classnames('form-control',{'error-input-border':errors.name})} name="name" placeholder="Enter Your Name" value={this.state.name} onChange={this.onChange} />
+                  {errors.name && (<label className="error-feedback">{errors.name}</label>)}
                 </div>
                 <div className="form-group">
-                  <input type="text" className="form-control"  placeholder="Enter Your Email" name="email" value={this.state.email} onChange={this.onChange} />
-                </div>
-                {/* <div className="form-group">
-                  <input type="text" className="form-control" name="phone" placeholder="Enter Your Phone Number" value={this.state.phone} onChange={this.onChange} />
-                </div> */}
-                <div className="form-group">
-                  <input type="password" className="form-control" name="password" value={this.state.password}
-                onChange={this.onChange} placeholder="Enter Your Password"/>
+                  <input type="text" className={classnames('form-control',{'error-input-border':errors.email})} placeholder="Enter Your Email" name="email" value={this.state.email} onChange={this.onChange} />
+                  {errors.email && (<label className="error-feedback">{errors.email}</label>)}
                 </div>
                 <div className="form-group">
-                  <input type="password" className="form-control" name="password2" value={this.state.password2}
-                onChange={this.onChange} placeholder="Repeat Your Password"/>
+                  <input type="password" className={classnames('form-control',{'error-input-border':errors.password})} name="password" value={this.state.password}
+                    onChange={this.onChange} placeholder="Enter Your Password" />
+                    {errors.password && (<label className="error-feedback">{errors.password}</label>)}
+                </div>
+                <div className="form-group">
+                  <input type="password" className={classnames('form-control',{'error-input-border':errors.password2})} name="password2" value={this.state.password2}
+                    onChange={this.onChange} placeholder="Repeat Your Password" />
+                    {errors.password2 && (<label className="error-feedback">{errors.password2}</label>)}
                 </div>
                 <button type="Submit" className="btn btn-default">Register</button>
                 <div className="login-text">
@@ -97,10 +95,10 @@ Register.propTypes = {
   errors: PropTypes.object.isRequired
 }
 
-const mapStateToProps =(state) => ({
+const mapStateToProps = (state) => ({
   userAuth: state.userAuth,
   errors: state.errors
 })
 
 
-export default connect(mapStateToProps,{registerUser})(Register);
+export default connect(mapStateToProps, { registerUser })(Register);

@@ -14,6 +14,16 @@ router.get('/test',(req,res) => {
   res.json({message: 'Products works'});
 });
 
+// view all products _ when user is shopping
+
+router.get('/all',(req,res) => {
+  ProductItem.find()
+    .then(products => {
+      return res.json(products);
+    })
+    .catch(err => console.log(err));
+});
+
 // add new product
 router.post('/add',passport.authenticate('jwt',{session:false}),(req,res)=> {
   const {errors,isValid} = validateProductInput(req.body);

@@ -8155,3 +8155,13 @@ ul.contact-list li.tel a {
 .status-message {
   padding-top: 30%
 }
+
+.error-feedback {
+  color:red;
+  font-size: 0.9em;
+  font-weight: 100;
+}
+
+.error-input-border {
+  border-color:red;
+}

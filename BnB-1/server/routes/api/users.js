@@ -74,7 +74,7 @@ router.post('/login', (req,res) => {
           if(isMatch) {
             // console.log('matched');
             // Setting up JWT and Passport on successful Login
-            const payload = {id:user.id,name:user.name};
+            const payload = {id:user.id,name:user.name,type:user.userType};
             jwt.sign(payload,keys.secretOrKey,{expiresIn: 3600}, (err,token) => {
               res.json ({
                 success: true,

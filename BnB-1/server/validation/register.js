@@ -25,10 +25,10 @@ module.exports = function validateRegisterInput (data) {
     errors.password = "Password is Required";
   }
   if(!validator.equals(data.password,data.password2)) {
-    errors.passowrd2 = "Passwords must match";
+    errors.password2 = "Passwords must match";
   }
   if(validator.isEmpty(data.password2)) {
-    errors.passowrd2 = "Confirm Password is Required";
+    errors.password2 = "Confirm Password is Required";
   }
   if(validator.isNumeric(data.phone) && !validator.isLength(data.phone,{min:10,max:12})) {
     errors.phone = "Phone Number is Invalid";

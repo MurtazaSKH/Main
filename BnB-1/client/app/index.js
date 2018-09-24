@@ -32,7 +32,6 @@ if(localStorage.jwtToken) {
     store.dispatch(getCart(decoded.id));
 }
 
-
 render((
   <Provider store={store}>
     <Router history={history}>

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {viewAllProducts} from '../../actions/productActions';
 import ProductItem from './ProductItem';
 import Pagination from 'jw-react-pagination';
-// import 'whatwg-fetch';
-// import {setInStorage,getFromStorage} from '../../utils/storage';
 
 class AllProducts extends React.Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class AllProducts extends React.Component {
     this.state = {
       products: [],
       pageOfItems: [],
-      numberOfRows: 2
+      numberOfRows: 10
     };
 
     this.handlePageChange = this.handlePageChange.bind(this);
@@ -39,30 +40,10 @@ class AllProducts extends React.Component {
     }
   }
   componentDidMount() {
-    // this.setState({isLoading: false});
-
-    fetch('/api/products/viewAll', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'applicaiton/json',
-        'Accept': 'application/json',
-        'X-API-Key': '8e6d52b0'
-      }
-    })
-    .then(res=>res.json())
-    .then(json =>{
-      // console.log('json: ',json);
-      if(json.length>0){
-        this.setState({
-          isLoading: false,
-          products: json
-        });
-      }
-    });
+    this.props.viewAllProducts(); 
   }
 
   render() {
-    // let products=this.state.products;
     return (<div>
       <section id="shop-list-right" className="shop-page shop-list-page shop-right-list shop-main-block">
         <div className="container">
@@ -122,43 +103,13 @@ class AllProducts extends React.Component {
                   </div>
                 </div>
                 <div id="products" className="list-products-main-block">
-                  {/* Insert Product items here */
-                  }
-                  {/* {products.map((product,index) => <ProductItem key={index} product={product} ></ProductItem>)}
-                  {this.state.pageOfItems.map(item =>
-                    <div key={item._id}>{item.name}</div>
-                  )} */}
                   {this.state.pageOfItems.map((product,index) => <ProductItem key={index} product={product} ></ProductItem>)}
                   <Pagination
-                    items={this.state.products} onChangePage={this.handlePageChange} className="pagination-block"
+                    items={this.props.productsFromStore.allProducts} onChangePage={this.handlePageChange} className="pagination-block"
                     pageSize={this.state.numberOfRows}
                     onChange={this.handlePageChange}
                   />
                 </div>
-                {/* <div className="pagination-block">
-                  <div className="row">
-                    <div className="col-xs-2">
-                      <div className="prev">
-                        <a href="#" className="btn btn-default" title="Previous"><i className="fa fa-long-arrow-left"></i></a>
-                      </div>
-                    </div>
-                    <div className="col-xs-8 text-center">
-                      <ul className="pagination">
-                        <li><a href="#" title="Pagination">1</a></li>
-                        <li className="active"><a href="#" title="Pagination">2</a></li>
-                        <li><a href="#" title="Pagination">3</a></li>
-                        <li><a href="#" title="Pagination">4</a></li>
-                        <li><a href="#" title="Pagination">5</a></li>
-                      </ul>
-                    </div>
-                    <div className="col-xs-2 text-right">
-                      <div className="next">
-                        <a href="#" className="btn btn-default" title="Next"><i className="fa fa-long-arrow-right"></i></a>
-                      </div>
-                    </div>
-                  </div>
-
-                </div> */}
               </div>
             </div>
           </div>
@@ -171,6 +122,13 @@ class AllProducts extends React.Component {
 
 }
 
+AllProducts.propTypes = {
+  productsFromStore: PropTypes.object.isRequired,
+  viewAllProducts: PropTypes.func.isRequired
+}
 
+const mapStateToProps = (state) => ({
+  productsFromStore: state.allProducts
+})
 
-export default AllProducts;
+export default connect(mapStateToProps,{viewAllProducts})(AllProducts);
